@@ -1,0 +1,37 @@
+SQL para crear las 3 tablas desde phpmyAdmin:
+
+Crear base de datos en phpMyAdmin llamada "relaciones_hibernate"
+
+CREATE TABLE `detalles_cliente` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `web` varchar(128) DEFAULT NULL,
+  `tfno` varchar(128) DEFAULT NULL,
+  `comentarios` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
+
+CREATE TABLE cliente(
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(45) DEFAULT NULL,
+  `apellido` varchar(45) DEFAULT NULL,
+  `direccion` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK_DETALLE` (`id`),
+  CONSTRAINT `FK_DETALLE` FOREIGN KEY (`id`) REFERENCES `detalles_cliente` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
+
+Si en la tabla cliente en la pantalla de estructura aparece solo una llave en la columna Id aplicar esta sentencia:
+
+ALTER TABLE `cliente` ADD CONSTRAINT `FK_DETALLES` FOREIGN KEY (`Id`) REFERENCES `detalles_cliente` (`Id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+CREATE TABLE PEDIDO (
+    ID INT (3) NOT NULL AUTO_INCREMENT,
+    FECHA DATE DEFAULT NULL,
+    FORMA_PAGO VARCHAR(15),
+    CLIENTE_ID INT(3) DEFAULT NULL,
+    PRIMARY KEY(ID),
+    KEY FK_CLIENTE_ID(CLIENTE_ID),
+    CONSTRAINT CLIENTE_ID
+    FOREIGN KEY (CLIENTE_ID)
+    REFERENCES CLIENTE(ID)
+    ON DELETE NO ACTION ON UPDATE NO ACTION) ENGINE = INNODB AUTO_INCREMENT=1 DEFAULT CHARSET=LATIN1
